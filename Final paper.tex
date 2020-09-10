@@ -1,0 +1,504 @@
+\documentclass[psamsfonts]{amsart}
+
+%-------Packages---------
+\usepackage{amssymb,amsfonts}
+\usepackage[all,arc]{xy}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,}
+
+\definecolor{violet}{rgb}{0.56, 0.0, 1.0}
+
+\newcommand{\mhana}[1]{\marginpar{\color{violet}#1}}
+\newcommand{\chana}[1]{\begin{quote}{\color{violet}[\bf Hana: #1]} \end{quote}}
+\newcommand{\hana}[1]{{\color{violet}{#1}}}
+
+\definecolor{hibiscus}{rgb}{0.79, 0.19, 0.41}
+
+\newcommand{\mgabby}[1]{\marginpar{\color{hibiscus}#1}}
+\newcommand{\gabby}[1]{{\color{hibiscus}{#1}}}
+
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+\numberwithin{equation}{section}
+
+\bibliographystyle{plain}
+
+%--------Meta Data: Fill in your info------
+\title{Classification of Bundles and Orientation}
+
+\author{Gabrielle Yangqing Li}
+
+\begin{document}
+
+\begin{abstract}
+In this paper, we will introduce bundle theory in a setting where fibers and map between fibers lie in a chosen category $\mathcal{F}$. We will construct classifying space using two-sided bar construction and prove a classification theorem. We will then define and classify bundles with additional structures by introducing $Y$-structure. We will then use orientation of bundle as an example to demonstrate $Y$-structure and its classification. 
+
+
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+
+
+
+
+\section{Preliminary}
+%%%
+\label{sec:prelim}
+%%%
+Throughout this paper, we use $\mathcal{F}$ to denote a category with a faithful ``underlying space'' functor $\mathcal{F} \rightarrow \mathcal{U}$ where $\mathcal{U}$ denotes the category of compactly generated weak Hausdorff spaces; therefore, function spaces in $\mathcal{U}$ are given the compactly generated topology.  Each subject in $\mathcal{F}$ is a space and the set of morphisms $\mathcal{F}(F, F')$ is a subspace of $\mathcal{U}(F, F')$. We can think of an object in category $\mathcal{F}$ as a space with an additional structure. For example, take $\mathcal{F}$ as the category where objects are based spaces that are homeomorphic to $n$-sphere for some fixed positive integer $n$ and morphisms are basepoint-preserving homeomorphisms. This example will be revisited later in the paper.
+
+This paper assumes basic familiarity with category theory and cohomology theory.
+
+\section{$\mathcal{F}$-Space and $\mathcal{F}$-Homotopy}
+In this section, we will define some basic concepts of $\mathcal{F}$-spaces and $\mathcal{F}$-homotopies. 
+
+\begin{defn}[$\mathcal{F}$-space]
+An $\mathcal{F}$-space is a map $\pi: E \rightarrow B$ in $\mathcal{U}$ such that $\pi^{-1}(b) \in \mathcal{F}$ for each $b \in B$; $B$ and $E$ are the base space and total space respectively of $\pi$. An $\mathcal{F}$-map is a pair of maps $(g, f): \nu \rightarrow \pi$ in $\mathcal{U}$ that makes the following diagram commute
+\[\xymatrix{
+D \ar[r]^-{g} \ar[d]_{\nu} & E \ar[d]^{\pi} \\
+A \ar[r]_-{f} & B\\} \]
+and that the restriction of $g: \nu^{-1}(a) \rightarrow \pi^{-1}(f(a))$ is in $\mathcal{F}$ for each $a \in A$.
+\end{defn}
+
+\begin{defn}[$\mathcal{F}$-homotopy and $\mathcal{F}$-homotopy equivalence]
+An $\mathcal{F}$-homotopy between $\mathcal{F}$-maps $\nu$ and $\pi$ is an $\mathcal{F}$-map $(H, h)$ in the following commutative diagram
+\[\xymatrix{
+D\times I \ar[rr]^-{H} \ar[d]_{\nu \times 1} && E \ar[d]^{\pi} \\
+A\times I \ar[rr]_-{h} && B\\} \]
+where each pair $(H_{s}, h_{s})$ is an $\mathcal{F}$-map for $H_{s}(d) = H(d, s)$. 
+\begin{itemize}
+	\item If $A = B$ and $h_{s}$ is the identity map over $B$ for all $s \in I$, then H is said to be an $\mathcal{F}$-homotopy over $B$. In this case, we denote it as  $H$ instead of $(H, id)$. We then call $\nu D \to A$ and $\pi E \to A$ equivalent $\mathcal{F}$-space over A.
+	\item An $\mathcal{F}$-map $g: D \rightarrow E$  over $B$ is an $\mathcal{F}$-homotopy equivalence if there is an $\mathcal{F}$-map $g': E \rightarrow D$ over $B$ such that $g'g$ and $gg'$ are $\mathcal{F}$-homotopic over $B$ to their respective identity maps.
+	\item An $\mathcal{F}$-space $\pi: E \rightarrow B$ is said to be $\mathcal{F}$-homotopy trivial if it is $\mathcal{F}$-homotopy equivalent to the projection $\pi_{1}: B \times F \rightarrow B$ for some $F \in \mathcal{F}$.
+\end{itemize}
+\end{defn}
+
+\begin{rem}
+Here we can think of $\mathcal{F}$-homotopy as a continuous deformation from $\mathcal{F}$-map $\nu$ to $\pi$ through $\mathcal{F}$-spaces.	
+\end{rem}
+
+\begin{defn}[Pullback of $\mathcal{F}$-space]
+Let $\pi: E \rightarrow B$ be an $\mathcal{F}$-space and let $f: A \rightarrow B$ be a map in $\mathcal{U}$. Define a space $$f^{*}E = \{(a, e) \in A \times E: f(a) = \pi(e)\}$$ and a map $ \tilde{f}: f^{*}E \rightarrow E$ by $\tilde{f}(a, e) = e$. We define pullback $\mathcal{F}$-space $\pi$ along $f$ to be the map $f^{*}\pi: f^{*}E \rightarrow A$ where $ f^{*}\pi(a, e) = a$. This is illustrated by the following commutative diagram. 
+\[\xymatrix{
+f^{*}E \ar[r]^-{\tilde{f}} \ar[d]_{f^{*}\pi} & E \ar[d]^{\pi} \\
+A \ar[r]_-{f} & B\\} \]
+\end{defn}
+
+\begin{defn}[$\mathcal{F}$-bundle]
+Let $B$ be connected space with a basepoint $b_{0} \in B$, and $p: E \rightarrow B$ be a continuous surjection where $p^{-1}(b_{0}) = F \in \mathcal{F}$. We require that for each $x \in B$, there is an open neighborhood $U_{x} \subset B$ containing $x$ such that there is a homeomorphism $\psi_{x}: p^{-1}(U_{x}) \rightarrow U_{x} \times F$, as illustrated in the following commutative diagram. 
+\[\xymatrix{
+p^{-1}(U_{x}) \ar[r]^-{\psi_{x}} \ar[d]_{p} & U_{x} \times F \ar[dl]^{\text{proj}} \\
+U_{x}\\} \]
+We call $E, B, F$ respectively the total space, the base space, and the fiber.
+\end{defn}
+
+Let $\pi: E \to B$ be an $\mathcal{F}$-space. If for every $\mathcal{F}$-space $\nu: D \to A$, $\mathcal{F}$-map $(g,f) : \nu \to \pi$, and every homotopy $h : A \times I \to B$ starting at $f$, there exists a homotopy $H : D \times I \to E$ starting at $g$ such that the pair $(H, h)$ is an $\mathcal{F}$-homotopy, then $\pi$ satisfies the $\mathcal{F}$-covering homotopy property ($\mathcal{F}$-CHP). Maps that satisfy $\mathcal{F}$-CHP are called $\mathcal{F}$-fibration, of which $\mathcal{F}$-bundle is a special case. The object of this paper is primarily bundle; generalized result for fibration could be found in \cite[Chapter 5 - 11]{Classifying}.
+
+\begin{prop}
+\label{prop:CHP}
+An $\mathcal{F}$-bundle satisfies the $\mathcal{F}$-covering homotopy property.
+\end{prop}
+\begin{proof}
+Detailed proof could be found in \cite[Theorem 11.7]{Steenrod}.	
+\end{proof}
+
+
+
+\begin{prop} 
+%%%%%%
+\label{prop:homotopicMapInduceBundle}
+%%%%%%
+Given a $\mathcal{F}$-bundle $p: E \to B$. If $f, g: A \rightarrow B$ are homotopic maps, then their induce $\mathcal{F}$-homotopy equivalent $\mathcal{F}$-bundle over A.
+\end{prop}
+\begin{proof}
+Let $H: A\times I \to B$ be the homotopy from $f$ to $g$. We construct the following commutative diagram. The first diagram is an $\mathcal{F}-CHP$ diagram by Proposition \ref{prop:CHP}. If we restrict the left side at $0$, we have the pullback diagram of $p: E \to B$ by $f$. The second diagram is a pullback diagram of $p: E \to B$ along $H$. 
+\[\xymatrix{
+f_{0}^{*}E \times I \ar[r]^{\tilde{H}} \ar[d]_{f_{0}^{*}p\ \times\ id} & E \ar[d] ^{p}\\
+X \times I \ar[r]_{H} & B\\} \hspace{30pt}
+\xymatrix{
+H^{*}E \ar[r]^{\tilde{H}} \ar[d]_{H^{*}p} & E \ar[d] ^{p}\\
+X \times I \ar[r]_{H} & B\\}\]
+By the universal property of pullback, we have an $\mathcal{F}$-homotopy from $f_{0}^{*}E \times I$ to $H^{*}E$ over $X \times I$. If we restrict the base space to $X \times {1}$, since $H_{1} = g$, we have a $\mathcal{F}$-homotopy from $f_{0}^{*}E \times {1}$ to $g^{*}E$ over $X \times {1}$, which means that $f$ and $g$ induce equivalent $\mathcal{F}$-bundle over $X$.
+\end{proof}
+
+\begin{defn}[Category of fibers]
+%%%
+\label{def: catFiber}
+%%%
+Let $\mathcal{F}$ have a distinguished object $F$. Then $(\mathcal{F}, F)$ is said to be a category of fibers if:  
+\begin{enumerate}
+    \item every map in $\mathcal{F}$ is a weak homotopy equivalence.
+    \item $\mathcal{F}(F, X)$ is non-empty for each $X \in \mathcal{F}$
+    \item for each $\phi \in \mathcal{F}(F, X)$, there is a weak homotopy equivalence $\mathcal{F}(1, \phi): \mathcal{F}(F, F) \rightarrow \mathcal{F}(F, X)$. 
+\end{enumerate}
+If $(\mathcal{F}, F)$ is a category of fibers for all $F$ in $\mathcal{F}$, it's called a homogeneous category of fibers.
+\end{defn}
+
+This definition seems artificial to start with. However, using the $n$-sphere example from Section \ref{sec:prelim} (Preliminary), we are able to see the purpose of these conditions in Remark \ref{rem:condition}.
+
+\begin{exmp}[Spherical bundle]
+Let $n$ be a positive integer. We take $\mathcal{F}$ as the category whose objects are based spaces homeomorphic to the $n$-sphere for fixed n and morphisms are basepoint-preserving homeomorphisms. Take $F$ as the $n$-sphere. 
+\end{exmp}
+
+\begin{rem}
+%%%
+\label{rem:condition}
+%%%
+Condition (1) is asking each fiber to be ``compatible''. In this example, it is satisfied because being homeomorphic is a stronger condition than being (weakly) homotopic equivalence. Condition (2) is asking each fiber to be ``compatible'' with the distinguished object $F$ (the $n$-sphere), which is also satisfied by how objects in $\mathcal{F}$ are chosen. Condition (3) is asking that function space on $F$ to be compatible with the function space from $F$ to any fiber. This makes it possible to construct the associate principal of fiber and functor $P$, which is be explained in Definition \ref{def:asso}.
+\end{rem}
+
+
+
+\begin{defn}[Principal category of fibers]
+A category of fibers $(\mathcal{G}, G)$ is principal if: 
+\begin{enumerate}
+    \item $G$ is a grouplike (i.e. $\pi_{0}G$ is a group) topological monoid
+    \item each object $Y \in \mathcal{G}$ is a right $G$-space
+    \item the space $\mathcal{G}(Y, Y')$ coincides with the space of right $G$-maps from $Y$ to $Y'$. 
+\end{enumerate}
+\end{defn}
+
+We identify the space $\mathcal{G}(G, Y)$ with $Y$ by identifying $\phi$  with $\phi(e_{G})$, and note that $\mathcal{G}(1, \phi): G \rightarrow Y$ given by $g \rightarrow \phi(e)g$ is required to be a weak homotopy equivalence by Condition (3) of Definition \ref{def: catFiber}.
+
+\begin{defn}[Associated principal category of fibers]
+%%%%%
+\label{def:asso}
+%%%%%
+Let $(\mathcal{F}, F)$ be a category of fibers. Define the associated principal category of fibers $(\mathcal{G}, G)$ (associated to $(\mathcal{F}, F)$) by letting $\mathcal{G}$ have objects $\mathcal{F}(F, X)$ for $X \in \mathcal{F}$, with $G = \mathcal{F}(F, F)$; the product on $G$ and the action of $G$ on $\mathcal{F}(F, X)$ are given by composition. 
+\end{defn}
+
+\begin{defn}[$Prin$ Functor]
+\label{def:prin}
+For a category of fibers $(\mathcal{F}, F)$ and its associated principal category of fibers $(\mathcal{G}, G)$, a $prin$ functor takes an $\mathcal{F}$-space to a $\mathcal{G}$-space. For an $\mathcal{F}$-space $\pi: E \rightarrow B$, we define a space $PE$ as a subspace of $\mathcal{U}(F, E)$ consisting of maps $\phi: F \rightarrow E$ such that $\phi(F) \subset \pi^{-1}(b)$ for some $b \in B$ and $\phi: F \rightarrow \pi^{-1}(b)$ is a map in $\mathcal{F}$. We then define a $\mathcal{G}$-space $P\pi: PE \rightarrow B$ by letting $(P\pi)(\phi) = \pi\phi(F)$.\\
+For an $\mathcal{F}$-map $\nu: D \rightarrow A$ and $\mathcal{F}$-map $(g, f): \nu \rightarrow \pi$, we define a $\mathcal{G}$-map $P(g, f) = (Pg, f): P\nu \rightarrow P\pi$ where $(Pg)(\phi) = g \circ \phi$. Then we have a functor $P$ (commonly referred as $Prin$) from the category of $\mathcal{F}$-space to the category of $\mathcal{G}$-space.
+\end{defn}
+
+Note that if $\pi$ is an $\mathcal{F}$-bundle, then the space $PE$ contains those maps that takes $F$ into some fiber, and the fiber is weakly equivalent $F$. The bundle $P\pi$ takes a map $\phi$ to the base point of the fiber to which $\phi$ takes $F$.
+
+\begin{exmp}[Equivalent definitions of principal $G$-bundle]
+Recall that classically for a topological group $G$, there are two ways to define a principal $G$-bundle $\pi: E \to X$. One definition states that $G$ has a fiber-preserving right on $E$, i.e. for $x \in E$ that belongs to some fiber $F_{x}$, we ask that $g \cdot x \in F_{x}$ for all $g \in G$. It is also required that $G$ acts freely and transitively such that for each $x \in X$ and $y \in F_{x}$, the map $G \to F_{x}$ sending $g$ to $yg$ is a homeomorphism. Therefore, each fiber of the bundle is homeomorphic to the group G itself. An alternative definition states that we can see each fiber as an orbit of the $G$-action and the base space X is homeomorphic to the orbit space $E/G$. Definition \ref{def:prin} above is precisely what translate the first definition into the second.
+\end{exmp}
+
+\begin{rem}
+%%%
+\label{rem:prin}
+%%%
+Note that in order for the two definitions to be equivalent, we need to construct a functor from the second definition to the first that serves as an ``inverse''. To start with a principal $\mathcal{G}$-bundle: $\pi: P \to X$ using the second definition, we can obtain an $\mathcal{F}$-bundle $P \times_{G} F: \to X$, and we claim that $- \times_{G} F$ is the equivalent left-adjoint functor to $Prin$.
+\end{rem}
+
+\begin{defn}[Category of bundle fibers]
+Let $G$ be a topological group and $F$ be a left $G$-space on which $G$ acts effectively. Define a category $\mathcal{F}$ to have objects $(X, x)$ where $X$ is a left $G$-space and $x: F \to X$ is a homeomorphism of left $G$-space. Define the set of morphisms from $(X, x)$ to $(X', x')$ to be $\{x'gx^{-1}: g \in G\}$. Let $(F, 1)$ be the distinguished object of $\mathcal{F}$ and we call $(\mathcal{F}, (F, 1))$ a category of bundle fibers. We write $(\mathcal{F}, F)$ instead of $(\mathcal{F}, (F, 1))$ for the ease of notation.
+\end{defn}
+
+One could check that a category of bundle fibers also satisfies the three conditions in Definition $\ref{def: catFiber}$. However, it is stronger to be a category of bundle fiber since in this case $x: F \to X$ has to be a homeomorphism rather than a weak homotopy equivalence. Also, the homeomorphism $x$ represents an extra structure of the fibers. In addition, it is not required in Definition $\ref{def: catFiber}$ that there are morphism between any pair of objects.
+
+\begin{exmp}[Vector bundle]
+Let $G$ be the set of automorphism of $\mathbb{R}$, denoted $GL(\mathbb{R}, n)$. Let $n$ be a positive integer. Define $(\mathcal{F}, F)$ to be a category bundle fibers where the objects are all the $n$-dimensional subspace of $\mathbb{R}^{\infty}$ with distinguished object $\mathbb{R}^{n}$. For an object $X$, let $x$ be a linear isomorphism from $F$ to $X$ (also a homeomorphism since all the objects in $\mathcal{F}$ are given the Euclidean topology). This is an example of a category of bundle fiber. This example is the same as the definition of vector bundles where each fiber is required to be isomorphic to $\mathbb{R}^{n}$.
+\end{exmp}
+
+
+
+
+
+
+\section{Classifying Space via geometric bar construction}
+In this section, we introduce geometric bar construction and classifying space. We also introduce some results that is useful for proving the classification theorem in Section \ref{sec:class}.
+
+\begin{defn}[Geometric bar construction]
+Let $G$ be a topological group such that the identity e is a nondegenerate base-point. Let $X$ and $Y$ be left and right $G$-spaces respectively. The bar construction gives us a simplicial topological space $B_{*}(Y, G, X)$ where the $j$-$th$ simplicies are $Y \times G^{j} \times X$ with typical elements written as $y[g_{1}, ..., g_{j}]x$. Let the face and degeneracy maps be given by
+\begin{displaymath}
+\delta_{i}(y[g_{1}, ..., g_{j}]x) = \begin{cases}
+yg_{1}[g_{2} ..., g_{j}]x & \text{if $ i > 0$}\\
+y[g_{1}, ..., g_{i - 1}, g_{i}g_{i + 1}, g_{j}]x & \text{if $ 1 < i \leq j$}\\
+y[g_{1}, ..., g_{j - 1}]g_{j}x & \text{if $ i = j$}\\
+\end{cases}
+\end{displaymath}
+and $s_{i}(y[g_{1}, ..., g_{j}]x) = y[g_{1}, ..., g_{i}, e, g_{i + 1}, ..., g_{j}]x$.
+\end{defn}
+
+Let $B(Y, G, X)$ denote the geometric realization of $B_{*}(Y, G, X)$. Let $*$ denote the one-point $G$-space and define $BG = B(*, G, *)$ and $EG = B(*, G, G)$. These two spaces are essential to the classification of bundles, which will be introduced in Theorem \ref{thm:classification}.
+
+\begin{notn}
+\label{notn:epsilon}
+Given a space $Z$, left and right $G$-spaces $X$ and $Y$, and a map $\lambda: X \times Y \to Z$ such that $\lambda(yg, x) = \lambda(y, gx)$, we let $\epsilon(\lambda)$ denote the induced map $B(Y, G, X) \to Z$. In later parts of the paper, we will write $\epsilon$ or $\tilde{\epsilon}$ for $\epsilon(\lambda)$, depending if the map is between base spaces or total spaces, when the choice of $\lambda$ is clear.	
+\end{notn}
+
+
+\begin{prop}
+%%%%%%
+\label{prop:extraDeneracy}
+%%%%%%
+The map $\tilde{\epsilon}: B(Y, G, G) \rightarrow Y$ is a homotopy equivalence (here the underlying $\lambda$ is the $G$-action $Y \times G \to Y$).
+\end{prop}
+\begin{proof}
+
+Let $Y_{*}$ denote the constant simplicial complex where each level is $Y$ and all maps are the identity. The idea of this proof is to first show that $Y_{*}$ is a strong deformation retract of $B_{*}(Y, G, G)$ with a right inverse (analogous to \cite[Proposition 9.8]{Iterated}. Then using the result that homotopy between simplicial complexes are preserved by geometric realization proved in \cite[Corollary 11.1]{Iterated}, we can prove that $B(Y, G, G)$ is homotopy equivalent to $Y$. 
+\end{proof}
+
+\begin{prop}
+%%%%%%
+\label{prop:pq}
+%%%%%%
+Let $G$ be a topological group and let $P\nu: PD \rightarrow X$ be a $(\mathcal{G}, G)$-bundle. In the following diagram, treat the map $p'$ as a $(\mathcal{G}, G)$-bundle that takes the last coordinate to a point. Then the map $\epsilon$ is a weak homotopy equivalence (here the underlying $\lambda$ is $PD \times * \to X$ that is just $P\nu$). If $X$ is a CW-complex, then $\epsilon$ has an inverse $g$. 
+\[\xymatrix{
+PD \ar[d]_{P\nu} & B(PD, G, G) \ar[l]_-{\tilde{\epsilon}} \ar[d]^{p'}\\
+X \ar@{.>}[r]<.5ex>^-{g} & B(PD, G, *) \ar[l]<.5ex>^-{\epsilon} \\} \]
+\end{prop}
+
+\begin{proof}
+In Proposition \ref{prop:extraDeneracy} we proved that $\epsilon: B(PD, G, G) \to PD$ is a homotopy equivalence, so it is a weak homotopy equivalence. Then we have the following part of a long exact sequence where $i$ denote the identity map of $G$. 
+\[\xymatrix{
+\pi_{n}G \ar[d]^-{i^{*}} \ar[r] & \pi_{n}B(PD, G, G) \ar[d]^-{\tilde{\epsilon}^{*}} \ar[r]& \pi_{n}B(PD, G, *) \ar[d]^{\epsilon^{*}} \ar[r] & \pi_{n - 1}G \ar[r] \ar[d]^-{i^{*}} & \pi_{n - 1}B(PD, G, G) \ar[d]^-{\tilde{\epsilon}^{*}}\\
+\pi_{n}G \ar[r] & \pi_{n}PD \ar[r] & \pi_{n}X \ar[r] & \pi_{n - 1}G \ar[r] & \pi_{n - 1}PD\\} \]
+By Five Lemma, we know that the middle arrow down is an isomorphism. If $X$ is a CW-complex, then it is homotopy equivalent to $B(PD, G, *)$ by \ref{thm:whiteHead}.
+\end{proof}
+
+In fact, for any right $G$-space $Y$, we have that $p': B(Y, G, G) \rightarrow B(Y, G, *)$ is a principal $G$-bundle corresponding to $q: B(Y, G, *) \rightarrow B(*, G, *)$, as illustrated above in the commutative square on the right in diagram \ref{pic:pq}.
+
+
+\section{Classification Theorem}
+\label{sec:class}
+In this section, we will introduce the classification theorem for bundles and some direct results.
+
+\begin{prop}
+%%%
+\label{prop: contractable}
+%%%
+Let $p: E \to B$ be a bundle with a contractable fiber $F$. Then it is a weak homotopy equivalence. 
+\end{prop}
+\begin{proof}
+We know that fiber bundle $F \to E \to B$ induces a long exact sequence $... \to \pi_{n}F \to \pi_{n}E \to \pi_{n}B \to \pi_{n - 1}F \to...$. Since $F$ is contractable, we have a sequence $... \to 0 \to \pi_{n}E \to \pi_{n}B \to 0 \to...$. By exactness at $\pi_{n}E$ and $\pi_{n}B$ respectively, we have that the induced map $p^{*}$ is both injective and surjective. Therefore, we proved that $p$ is a weak homotopy equivalence.
+\end{proof}
+
+\begin{thm}[Whitehead] \leavevmode
+%%%%%%
+\label{thm:whiteHead}
+%%%%%%
+\begin{enumerate}
+\item If $\theta: Y \to Z$ is a weak homotopy equivalence, for CW-complex X the induced map $\theta^{*}: [X,Y] \to [X, Z]$ is an isomorphism.
+\item If the $Y$ and $Z$ above are CW-complexes, then the weak homotopy equivalence $\theta$ is a homotopy equivalence.
+\end{enumerate}
+
+\end{thm}
+\begin{proof}
+For (1), we first factor $\theta$ through the mapping cylinder $M_{\theta}$ so that we can replace $Z$ with $M_{\theta}$ since there is a homotopy equivalence. To prove both injectivity and surjectivity, we use Homotopy extension and lifting property in \cite[Page 75]{Concise} to induct on the skeleton of $X$. Substituting $X$ for $Y$ and $Z$ respectively, we can prove (2) as an immediate consequence of (1). Detailed proof could be found in \cite[Page 76]{Concise}.
+\end{proof}
+
+\begin{thm} [Classification Theorem]
+%%%
+\label{thm:classification}
+%%%
+Suppose that $(\mathcal{F}, F)$ is a category of bundle fibers and $(\mathcal{G}, G)$ is its associated principal category of fibers. For a CW-complex $X$, we have that the set $G_{\mathcal{F}}X$ of equivalence classes of $\mathcal{F}$-bundle over $X$ is in bijection to $[X, BG]$ the homotopy equivalence class of maps from $X$ to $BG$.
+\end{thm}
+
+\begin{proof}
+In Section \ref{sec:prelim}, we introduced that there is a pair of equivalent adjoint functors between $(\mathcal{F}, F)$-bundle and associated principal $(\mathcal{G}, G)$-bundles over $X$. It suffices to classify the equivalence classes of principal $\mathcal{G}$-bundle over $X$. We begin the proof by defining two maps $\Psi: [X, BG] \rightarrow G_{\mathcal{F}}X$ and $\Phi: G_{\mathcal{F}}X \rightarrow [X, BG]$. Define $\Psi([f]) = f^{*}p$, the pullback of bundle $p: EG \rightarrow BG$. By Proposition \ref{prop:homotopicMapInduceBundle}, we know that $\Psi$ is well-defined. Given an  $\mathcal{F}$-bundle $\nu: D \rightarrow X$, we have its associated principal $\mathcal{G}$-bundle: $P\nu: PD \rightarrow X$. Define $\Phi(\nu) = [g \circ q]$ where $g$ is the inverse of $\epsilon$ in Proposition \ref{prop:pq}, as shown in the commutative diagram below. Here the left square was introduced in Proposition \ref{prop:pq} and the right square is a pullback diagram of the $\mathcal{G}$-bundle $p: EG \to BG$.
+\label{pic:pq}
+\[\xymatrix{
+PD \ar[d]_{P\nu} & B(PD, G, G) \ar[l]_-{\epsilon} \ar[d]^{p'} \ar[r]^-{\tilde{q}} & B(*, G, G) = EG \ar[d]^{p} \\
+X \ar@{.>}[r]<.5ex>^-{g} & B(PD, G, *) \ar[l]<.5ex>^-{\epsilon} \ar[r]_-{q} & B(*, G, *) = BG \\} \]
+
+We first show that the composition $\Psi\Phi$ is the identity. Note that we can view $p': B(PD, G, G) \to B(PD, G, *)$ as a $\mathcal{G}$-bundle where the last coordinate gets mapped to a single point of $G$, and we get a pullback principal $\mathcal{G}$-bundle $g^{*}p': g^{*}B(PD, G, G) \rightarrow X$ and a lift $\tilde{g}: g^{*}B(PD, G, G) \rightarrow B(PD, G, G)$ as in the following diagram. 
+\[\xymatrix{
+g^{*}B(PD, G, G) \ar[r]^-{\tilde{g}} \ar[d]_{g^{*}p'} & B(PD, G, G) \ar[d]^{p'} \ar[r]^-{\epsilon} & PD \ar[d]^{P\nu}\\
+X \ar[r]_-{g} & B(PD, G, *) \ar[r]_-{\epsilon} & X\\} \]
+Since $g \circ \epsilon$ is homotopic to $Id_{X}$, by lifting the homotopy as in Proposition \ref{prop:CHP} we know that the bundle map from $g^{*}p'$ to $P\nu$ is homotopic to the identity bundle map on $g^{*}p'$. Therefore, we have equivalence bundles $P\nu$ and $g^{*}B(P, G, G)$ over $X$. Then $\Psi\Phi(\nu) = [(q \circ g)^{*}p] = [(g^{*}(q^{*}p))] = [(g^{*}p')] = [\nu]$, as desired.
+
+To prove that $\Phi\Psi$ is the identity, consider the following pullback diagram where $f^{*}EG$ is the pullback of $p: EG \rightarrow BG$ along $f: X \rightarrow BG$ and 
+\[\xymatrix{
+X \ar@{.>}[r]<.5ex>^-{g} \ar[d]_-{f} & B(f^{*}EG, G, *) \ar[l]<.5ex>^-{\epsilon}  \ar[d]_-{B\tilde{f}} \ar[r]_-{q} & B(*, G, *) = BG \\
+BG & B(EG, G, *) \ar[l]_-{\epsilon'} \ar[ru]_-{q'} & \\
+} \]
+The bottom left map $\epsilon'$ is a weak homotopy equivalence as $B(EG, G, G) \to EG$ is a homotopy equivalence and there is $G$-bundle $EG \to BG$ and $B(EG, G, G) \to B(EG, G, *)$ (similar to proof of Proposition \ref{prop:pq}). The map $q'$ can be understood as a bundle with fiber $EG$. It is also a weak homotopy by Proposition \ref{prop: contractable}. Given two weak homotopy equivalences, by Theorem \ref{thm:whiteHead}, we have that $[X, BG] \cong [X, B(f^{*}EG, G, *)] \cong [X, BG]$. Then $\Phi\Psi([f]) = \Phi([f^{*}p]) = [q \circ g]$ is an automorphism, and so $\Psi$ is an injection. We know that $\Psi\Phi\Psi([f]) = \Psi([f])$ since $\Psi\Phi$ is the identity. By associativity of maps, we know that $\Psi\Phi\Psi([f]) = \Psi([q \circ g])$. By injectivity of $\Psi$, we have $[f] = [q \circ g]$, so $\Phi\Psi$ is actually an isomorphism, as desired.
+Therefore, we have proved that the homotopic classes of maps in $[X, BG]$ is one-to-one correspondent to the equivalence classes of $\mathcal{G}$-principal bundles over $X$.
+\end{proof}
+
+
+
+
+
+\section{$Y$-structure: definition, example, and classification}
+We will introduce how additional structures of bundles are defined and provide two instinct examples. We will also classify bundles with additional structures, using a similar approach as in Theorem \ref{thm:classification}.
+
+\begin{defn}[$Y$-structure]
+\label{def:Y}
+Let $(\mathcal{F}, F)$ be a category of bundle fibers. Given an auxiliary space $Z$ and an inclusion of $Y$ into the function space $\mathcal{U}(F, Z)$ such that the right action of $G$ on $Y$ is the action $G = \mathcal{U}(F, F)$ on $\mathcal{U}(F, Z)$ by pre-composition. Define a $Y$-structure $\theta$ on an $\mathcal{F}$-space $\nu: D \rightarrow A$ to be a map $\theta: D \rightarrow Z$ such that for an inclusion of fiber $\psi: F \rightarrow D$ (like the map $\theta$ in Definition \ref{def:prin}), the composition $\theta\cdot\psi: F \rightarrow Z$ is in Y. Similarly, an $\mathcal{F}$-map $(\nu, \theta) \rightarrow (\nu', \theta')$ between two $\mathcal{F}$-map $\nu, \nu'$ with $Y$-structure $\theta, \theta'$ is an $\mathcal{F}$-map $(g, f): \nu \rightarrow \nu'$ such that $\theta \circ g$ is homotopic to $\theta'$ via homotopy $H: D’ \times I \rightarrow E$. For all $t \in I$, we require that $H_{t}\psi: F \rightarrow Z$ is in $Y$ for all $\psi \in PD$.
+\end{defn} 
+
+%TODO: what does this mean...
+\begin{exmp} [Reduction of structural group]
+Suppose that $H$ is a subgroup of $G$ with a group homomorphism inclusion $i: H \to G$. Given a $G$-bundle $\nu: D \to A$ with fiber $F$, we let $Z = B(*, H, F)$ and $Y = B(*, H, G)$. By Remark \ref{rem:prin}, we know that $Y$ is homeomorphic to $PB(*, H, F)$, and so $Y$ lies in $\mathcal{U}(F, Z)$. Take $\theta: D \to B(*, H, F)$ as an $H/G$-structure. Let $E$ be the principal $H$-bundle induced from the universal bundle $EH \to BH$ by $A \to BH$. Then $\theta$ determines an equivalence of $G$-bundle from $D$ to the bundle $E \times_{H}F$ (recall Remark \ref{rem:prin}). This $Y$-structure is characterized by the reduction from a $G$-bundle to a $H$-bundle.
+\end{exmp}
+
+\begin{exmp} [Trivialization of bundle] 
+%%%%%%
+\label{exp:trivialization}
+%%%%%%
+Let $(\mathcal{F}, F)$, $(\mathcal{F'}, F)$ be two categories of fibers together with the associated principal category $(\mathcal{G}, G)$ and $(\mathcal{G}', G')$ respectively. Note here we are changing the category $\mathcal{F}$ to $\mathcal{F}'$ but the distinguished object $F$ stays the same. Assume that $(\mathcal{F}, F)$ and $(\mathcal{F'}, F)$ also have the structure of bundle fibers. We require that $G \subset G'$, which means $\mathcal{F}(F, F) \subset \mathcal{F}'(F, F)$; i. e. the category $\mathcal{F}$ allows more homeomorphisms from $F$ to itself. Given a $G$-bundle $\nu: D \to X$, we take $Y = G'$ and $Z = F$. Then we can view the $G'$-structure $\theta: D \to F$ as the second coordinate of an $\mathcal{F'}$-map $D \to X \times F$ over $X$. In other words, the bundle $\nu$ (as a $G'$-bundle) is equivalent to the trivial bundle. This $Y$-structure is characterized by the trivialization of a $G$-bundle as a $G'$-bundle.
+
+This example will be revisited shortly with an alternative explanation using Theorem \ref{thm:Yclassification}.
+\end{exmp}
+
+\begin{thm} [Classification for bundles with $Y$-structure]
+%%%
+\label{thm:Yclassification}
+%%%
+Suppose that $(\mathcal{F}, F)$ is a category of fibers and $(\mathcal{G}, G)$ is its associated principal category of fibers. Assume that $(\mathcal{F}, F)$ also have the structure of bundle fibers. For CW-complex $X$, we have that the set $G_{\mathcal{F}}(X, Y)$ of equivalence classes of $\mathcal{F}$-bundle with $Y$-structure over $X$ is in bijection to $[X, B(Y, G, *)]$ the homotopy equivalence class of maps from $X$ to $BG$.
+\end{thm}
+
+\begin{proof}
+The structure of this proof is similar to that of Theorem \ref{thm:classification}, despite the fact that now we have to define where $\Phi$ and $\Psi$ takes the $Y$-structure $\omega$ and check if the maps are well-defined with respect to the $Y$-structure Similarly, we define two maps $\Psi: [X, BG] \rightarrow G_{\mathcal{F}}(X, Y)$ and $\Phi: G_{\mathcal{F}}(X, Y) \rightarrow [X, BG]$. Suppose we have $p: B(Y, G, G) \rightarrow B(Y, G, *)$ with $Y$-structure $\omega: B(Y, G, G) \to Z$. We define $\Psi([f]) = \{f^{*}p, \omega\tilde{f}\}$ where $\tilde{f}: f^{*}B(Y, G, G) \to B(Y, G, G)$. To prove well-defineness, suppose we have two homotopic map $f, h: X \to B(Y, G, *).$
+\[\xymatrix{
+h^{*}B(Y, G, G) \ar[dr]_-{h^{*}p} \ar[r]^-{J_{1}} \ar@/^5ex/[rr]^-{\tilde{h}} & f^{*}B(Y, G, G) \ar[d]_{f^{*}p} \ar[r]^-{\tilde{f}} & B(Y, G, G)\ar[d]^{p} \ar[r]^-{\omega}& Z\\
+& X \ar[r]<.5ex>^-{g} \ar[r]<-.5ex>_-{h} & B(Y, G, *) \\} \]
+By Proposition \ref{prop:homotopicMapInduceBundle}, we know that there is a bundle-covering homotopy $J: h^{*}(Y, G, G) \times I \to f^{*}(Y, G, G)$ that starts at the identity on $h^{*}p$. The composition
+$$ h^{*}B(Y, G, G) \xrightarrow{J_{1}} f^{*}B(Y, G, G) \xrightarrow{\tilde{f}}  B(Y, G, G) \xrightarrow{\omega} Z $$
+is homotopic to $$ h^{*}B(Y, G, G) \xrightarrow{\tilde{h}} B(Y, G, G) \xrightarrow{\omega} Z,$$ which shows that $\Psi$ is well-defined with respect to $\omega$.
+ 
+Given an  $\mathcal{F}$-bundle $\nu: D \rightarrow X$ with $Y$-structure $\theta: D \to Z$, we have its associated principal $G$-bundle: $P\nu: PD \rightarrow X$ with $Y$-structure $\tilde{\theta}: PD \to Z$ where $\tilde{\theta}: PD \to Y$ is defined as $\tilde{\phi}(\theta) = \theta \circ \phi$. Consider the composition $$A \xrightarrow{g} B(PD, G, *) \xrightarrow{B\tilde{\theta}} B(Y, G, *)$$ where $g$ is an inverse of $\epsilon: B(PD, G, *) \to A$ as in Theorem \ref{thm:classification}, and we define $\Phi(\nu) = [g \circ B\tilde{\theta}]$. To prove well-defineness of $\Phi$, for two equivalent bundles with equivalent $Y$-structure, we want to prove that their images under $\Phi$ is homotopic. Given another bundle $(\nu', \theta')$, an $\mathcal{F}$-map $k: D \to D'$ over $X$, and a homotopy $h: D \times I \to Z$ through $Y$-structure from $\theta$ to $\theta' k$, we define $Ph: PD \times I \to Y$ by $(Ph)_{t}(\psi) = h_{t} \circ \psi$. For $\phi \in G$, we have $(Ph)_{t}(\psi \circ \phi) = (Ph)_{t}(\psi)\circ \phi$; hence $Ph: PD \times I \to PZ$ is an induced $G$-equivariant homotopy from $\tilde{\theta}$ to $\tilde{\theta} \circ Pk$. It therefore induces a homotopy from $B\tilde{\theta}$ to $B\tilde{\theta'} \circ BPk$ after the bar construction. After composing each one with $g$, the homotopy is preserved. Thus, we proved that $\Phi$ is well-defined, as desired.
+
+Using the argument in Theorem \ref{thm:classification}, we are able to show that $\Phi\Psi$ is the identity with respect to bundle. Let's now prove that $\Phi\Psi$ is also the identity with respect to the $Y$-structure. In the following diagram, we have proved this part of in Theorem \ref{thm:classification} that $g^{*}p'$ and $P\nu$ are equivalent bundles over $X$. 
+
+\[\xymatrix{
+g^{*}B(Y, G, G) \ar[dr]_-{g^{*}p'} \ar[r]^-{J_{1}} \ar@/^5ex/[rr]^-{\tilde{g}} & PD \ar[d]_{P\nu} \ar[r]<0.5ex>^-{\tilde{\epsilon}^{-1}} & B(PD, G, G) \ar[d]^{p'} \ar[l]<0.5ex>^-{\tilde{\epsilon}} \ar[r]^-{\widetilde{B\tilde{\theta}}}& B(Y, G, G) \ar[d]^-{p} \ar[r]^-{\omega} & Z\\
+& X \ar[r]<0.5ex>^-{g} & B(PD, G, *) \ar[l]<0.5ex>^-{\epsilon} \ar[r]_-{B\tilde{\theta}} & B(Y, G, *) \\} \]
+
+Using exactly the same argument as the well-defineness of $\Psi$, we see that the composition $$g^{*}B(Y, G, G) \xrightarrow{\tilde{g}} PD \xrightarrow{\tilde{\epsilon}^{-1}}  B(PD, G, G) \xrightarrow{\widetilde{B\tilde{\theta}}} h \xrightarrow{\omega} Z $$ is homotopic to $$g^{*}B(Y, G, G) \xrightarrow{\tilde{g}}  B(PD, G, G) \xrightarrow{\widetilde{B\tilde{\theta}}} h \xrightarrow{\omega} Z.$$ Therefore, the $Y$-sturctures $PD \to Z$ and $g^{*}{B(Y, Y, G)} \to Z$ are equivalent, and so $\Phi\Psi$ is the identity on $Y$-structures as well.
+
+
+
+
+
+
+
+To verify that $\Psi\Phi$ is an automorphism and therefore the identity, we can construct a diagram similar to the one in the proof of Theorem \ref{thm:classification}.
+\[\xymatrix{
+X \ar@{.>}[r]<.5ex>^-{g} \ar[d]_-{f} & B(f^{*}B(Y, G, G), G, *) \ar[l]<.5ex>^-{\epsilon}  \ar[d]_-{B\tilde{f}} \ar[r]_-{q} & B(Y, G, *)\\
+B(Y, G, *) & B(B(Y, G, G), G, *) \ar[l]_-{B\epsilon} \ar[ur]_-{q}\\
+} \]
+
+Here the map $q$ is a homotopy equivalence since it is the induced map of $B(Y, G, G) \to Y$. The map $B\epsilon$ is a weak homotopy equivalence using the proof of Proposition \ref{prop:pq}. Therefore, similar to Theorem \ref{thm:classification}, we can show that $\Psi\Phi$ is also the identity.
+\end{proof}
+
+Here are some immediate results from the proof of Theorem \ref{thm:Yclassification} and that of Theorem \ref{thm:classification}.
+
+\begin{cor}
+\leavevmode
+\begin{enumerate}
+\item The map $q_{*}: [X, B(Y, G, *)] \to [X, BG]$ represents the forgetful transformation from $G_{\mathcal{F}}(X, Y) \to G_{\mathcal{F}}(X)$ taking $(\nu, \theta)$ to $\nu$ and we have $\Phi(\nu) = [q]\Phi{(\nu, \theta)}$
+\item $[X,Y]$ is isomorphic to the equivalence classes of $Y$-structure on the trivial $\mathcal{F}$-bundle $\epsilon: X \times F \to X$ as follow: for $f: X \to Y$, the corresponding $Y$-structure is given by its adjoint $A \times F \to Z$.
+\item $[X, G]$ is naturally isomorphic to the set of $\mathcal{F}$-homotopy classes of $\mathcal{F}$-maps over $A$ from the trivial bundle $\epsilon$ to itself. Given $f: X \to G$, its adjoint $X \times F \to F$ is the second coordinate of the corresponding $\mathcal{F}$-map over $X$.
+\item Let $\iota$ be a map from $G$ to $Y$. Then $\iota_{*}: [X, G] \to [X, Y]$ represents the transformation that sends an $\mathcal{F}$-map $g: X \times F \to X \times F$ to the $Y$-structure $\theta_{0} \circ g$, where $\theta_{0}: X \times F \to Z$ is the $Y$-structure on $\epsilon$ with adjoint being the constant map $X \to \iota(e)$. 
+\end{enumerate}
+
+\end{cor}
+
+
+
+\begin{rem}
+We now have another explanation of Example \ref{exp:trivialization} using the proof of Theorem \ref{thm:Yclassification}. We know that the map $f$ below $X \to B(G', G, *)$ corresponds to an equivalence class of $G$-bundle with $G'$-structure over X.
+\[\xymatrix{
+& & X \ar[d] \ar[dl]_{f}\\
+G' \ar[d]_{=} \ar[r] & B(G', G, *) \ar[d] \ar[r] & B(*, G, *) = BG \ar[d]\\
+G' \ar[r] & B(G', G', *) \ar[r] & B(*, G', *) = BG' \\} \]
+The first row represents the a principal $G$-bundle with a $G'$-structure. The second row represents the universal $G'$-bundle. By commutativity of this diagram, the map $f: X \to BG'$ factors through the contractable space $B(G', G', *)$. It is then null-homotopic, and the $\mathcal{F'}$ bundle associated with it is trivial.
+In other words, a $G'$-structure for an $G$-bundle is characterized by its triviality as an $G'$ bundle. 
+\end{rem}
+
+
+
+\section{Application: orientation of bundle}
+In this section, we will introduce orientations of fiber bundles with respect to a cohomology theory E. We will show why an orientation is an example of a $Y$-structure and revisit the classification theorem of $Y$-structure the context of orientations. 
+
+We first introduce some preliminary concepts that are essential for understanding orientations and classification. 
+\begin{defn}[Thom space]
+For a vector bundle $\xi: P \rightarrow A$, we construct the Thom space $T\xi$ by applying one point compactification to each fiber $V$ (so at each point of X we have a spherical fiber $S^{V}$) and identifying the the infinity points of  spherical fibers we just obtained.
+\end{defn}
+
+\begin{defn}[$E$-orientation]
+%%%%%%
+\label{def:Eorientation}
+%%%%%%
+Given a cohomology theory E, a principal $G$-bundle $\xi$ with fiber $V$ is $E$-orientable if there exists a class $\mu \in E^{n}(T\xi)$ (where n = dimV) such that $\mu$ restricts to a generator of $E^{n}(S^{v}) \cong E^{0}S^{0}$ for each fiber $V$ along $E^{n}(T\xi) \rightarrow E^{n}(S^{v})$. We call $\mu$ the orientation class.        
+
+We denote a bundle $\xi$ with an orientation $\mu$ as $(\xi, \mu)$, and we say that $(\xi, \mu)$ is $E$-oriented.
+\end{defn}
+
+%TODO
+
+\begin{prop}[Property of $E$-orientation]
+\leavevmode
+\begin{enumerate}
+	\item The trivial spherical bundle $\epsilon: X \times S^{V} \to X$ under the suspension of $1 \in E^{0}X$ is an $E$-orientation of $\epsilon$, called the canonical orientation $\mu_{0}$.
+	\item Preserved by pullback: for an $E$-oriented $G$-bundle $(\psi, \nu)$ over $Y$ and $f: X \to Y$, the pullback bundle ($f^{*}\psi, (Tf)^{*}(\nu)$) is an $E$-oriented $G$-bundle over $X$ where $Tf: Tf^{*}\psi \to T\psi$ is the induced map on the Thom spaces.
+	\item Preserved by product: for $E$-oriented $G$-bundle $(\psi, \nu)$ over $X$ and $(\xi, \mu)$ over $Y$, the product of the bundles is also an $E$-orientable $G$-bundle over $X \times Y$.
+\end{enumerate}
+\end{prop}
+
+More properties of orientation could be found in \cite[III, Remark 1.5]{Orientation}.
+
+Here, instead of using the common notion of spectra where each level $E_{i}$ is indexed by natural number $i$, we use coordinate-free spectra where each level $E_{V}$ is indexed by some finite-dimensional space $V$. Analogously, for an inclusion $V \subset W$, there is a homeomorphism $\sigma_{V, W}: E_{V} \to \Omega^{W - V}E_{W}$ where $W - V$ denote the orthogonal complement of $V$ in $W$.
+
+	Let $E_{0}$ denote the 0-$th$ level of the spectra that is associated with the cohomology theory $E$.
+	Let $GL(1, E)$ denote the union of components in $E_{0}$ that contain units in the $\pi_{0}E_{0}$.
+	
+	We claim that given a cohomology theory $E$, an $E$-orientation of a bundle is actually an example of a $Y$-structure if we take the $Y$ in Definition \ref{def:Y} to be $GL(1, E)$. To see this, we describe $E$-orientation in the language of $Y$-structure. First, for an $E$-oriented $G$-bundle: $(\xi, \mu): D \to X$ with fiber $S^{V}$, take $E_{V} = Z$. From the definition of spectrum we have a map $\tilde{\delta}: E_{0} \to F(S^{V}, E_{V})$, so we can identify $GL(1, E)$ with a subspace of $F(S^{V}, E_{V})$, which satisfies how $Y$ is defined in Definition \ref{def:Y}. We think of the orientation class $\mu$ as a homotopy class of maps $D \to E_{V}$ such that for any $\psi: S^{V} \to D$ that is a based homotopy equivalence into a fiber, the composition $\mu\psi: S^{V} \to E_{V}$ is in $GL(1, E)$. 
+We know that $\mu$ factor through $T\xi = D/X$ because for $\chi: \xi^{-1} \to D$, the composition $\mu\chi$ takes each fiber to a single unit of $EV$.
+This ensures that the restriction of $\mu$ from $E^{n}T\xi \to T^{n}T\chi$ is a generator. Therefore, Theorem \ref{thm:ori} comes directly from Theorem \ref{thm:Yclassification}.
+
+\begin{thm} [Classification for $E$-oriented bundle]
+\label{thm:ori}
+For CW-complex $X$, we have that the set of equivalence classes of $E$-oriented $G$-bundles over X with fiber $S^{V}$ (under the relation of orientation preserving $G$-bundle equivalence) is bijective to $[X, B(GL(1, E), G, *)]$.
+\end{thm}
+
+
+
+
+\section*{Acknowledgments} 
+I would like to thank my mentor Hana Jia Kong for her help throughout the REU, without which I would not have made as much out of this experience as I did. I would also like to thank Professor May, first and foremost, for running this remote REU during this difficult time, suggesting this interesting topic, and answering all questions of mine.
+
+
+ 
+\bibliographystyle{plain} 
+\bibliography{refs} 
+
+\end{document}
+
+
