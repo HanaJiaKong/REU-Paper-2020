@@ -289,8 +289,7 @@ In Proposition \ref{prop:extraDeneracy} we proved that $\epsilon: B(PD, G, G) \t
 By Five Lemma, we know that the middle arrow down is an isomorphism. If $X$ is a CW-complex, then it is homotopy equivalent to $B(PD, G, *)$ by Theorem \ref{thm:whiteHead}.
 \end{proof}
 
-In fact, for any right $G$-space $Y$, we have that $p': B(Y, G, G) \rightarrow B(Y, G, *)$ is a principal $G$-bundle corresponding to $q: B(Y, G, *) \rightarrow B(*, G, *)$, as illustrated above in the commutative square on the right in diagram \ref{pic:pq} \hana{use equation environment for the diagram and you will have a label attached to it}.
-
+In fact, for any right $G$-space $Y$, we have that $p': B(Y, G, G) \rightarrow B(Y, G, *)$ is a principal $G$-bundle corresponding to $q: B(Y, G, *) \rightarrow B(*, G, *)$, as illustrated above in the commutative square on the right in Diagram (\ref{pic:pq}).
 
 \section{Classification Theorem}
 \label{sec:class}
@@ -329,12 +328,12 @@ Suppose that $(\mathcal{F}, F)$ is a category of bundle fibers and $(\mathcal{G}
 
 \begin{proof}
 We begin the proof by defining two maps $\Psi: [X, BG] \rightarrow G_{\mathcal{F}}X$ and $\Phi: G_{\mathcal{F}}X \rightarrow [X, BG]$. Define $\Psi([f]) = f^{*}p$, the pullback of bundle $p: EG \rightarrow BG$. By Proposition \ref{prop:homotopicMapInduceBundle}, we know that $\Psi$ is well-defined. Given an  $\mathcal{F}$-bundle $\nu: D \rightarrow X$, we have its associated principal $\mathcal{G}$-bundle: $P\nu: PD \rightarrow X$. Define $\Phi(\nu) = [g \circ q]$ where $g$ is the inverse of $\epsilon$ in Proposition \ref{prop:pq}, as shown in the commutative diagram below. Here the left square was introduced in Proposition \ref{prop:pq} and the right square is a pullback diagram of the $\mathcal{G}$-bundle $p: EG \to BG$.
-
+\begin{equation}
 \label{pic:pq}
-	\[\xymatrix{
+	\xymatrix{
 PD \ar[d]_{P\nu} & B(PD, G, G) \ar[l]_-{\epsilon} \ar[d]^{p'} \ar[r]^-{\tilde{q}} & B(*, G, G) = EG \ar[d]^{p} \\
-X \ar@{.>}[r]<.5ex>^-{g} & B(PD, G, *) \ar[l]<.5ex>^-{\epsilon} \ar[r]_-{q} & B(*, G, *) = BG \\} \]
-
+X \ar@{.>}[r]<.5ex>^-{g} & B(PD, G, *) \ar[l]<.5ex>^-{\epsilon} \ar[r]_-{q} & B(*, G, *) = BG \\} 
+\end{equation}
 We first show that the composition $\Psi\Phi$ is the identity. Note that we can view $p': B(PD, G, G) \to B(PD, G, *)$ as a $\mathcal{G}$-bundle where the last coordinate gets mapped to a single point of $G$, and we get a pullback principal $\mathcal{G}$-bundle $g^{*}p': g^{*}B(PD, G, G) \rightarrow X$ and a lift $\tilde{g}: g^{*}B(PD, G, G) \rightarrow B(PD, G, G)$ as in the following diagram. 
 \[\xymatrix{
 g^{*}B(PD, G, G) \ar[r]^-{\tilde{g}} \ar[d]_{g^{*}p'} & B(PD, G, G) \ar[d]^{p'} \ar[r]^-{\epsilon} & PD \ar[d]^{P\nu}\\
